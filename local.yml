@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+
+  flask_service:
+    container_name: flaskapp_dev
+    restart: unless-stopped
+    image: manor-dashboard
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./:/flask
+    environment:
+        - FLASK_DEBUG=1
+        - AUTHFILE=auth.txt
+        - PAGE_REFRESH_INTERVAL_MINS=1
+        - DATA_POLLING_INTERVAL_MINS=2
+        #- DATA_POLLING_CERTS=
+        - CNAME_CSV=cnames.csv
+
+      

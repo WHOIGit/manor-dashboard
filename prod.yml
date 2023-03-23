@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  flask:
+    container_name: flaskapp
+    restart: unless-stopped
+    image: ghcr.io/whoigit/nagios-dashboard:latest
+    ports:
+        - "5000:5000"
+    volumes:
+      - ./:/flask
+    environment:
+        - FLASK_DEBUG=0
+        - AUTHFILE=auth.txt
+        - PAGE_REFRESH_INTERVAL_MINS=5
+        - DATA_POLLING_INTERVAL_MINS=10
+        #- DATA_POLLING_CERTS=
+        - CNAME_CSV=cnames.csv
+    labels:  # add this compose file to the Traefik reverse proxy network
+      - "traefik.http.routers.nagios-dashboard.rule=Host(`manor-dashboard.whoi.edu`)"
+      - "traefik.http.routers.nagios-dashboard.tls=true"
+
+networks:
+  default:
+    external:
+      name: proxy-network
+
