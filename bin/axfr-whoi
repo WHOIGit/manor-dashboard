@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Simple script to use TSIG key to pull zone transfers in Bluecat.
+# TSIG key provided by Eric Bates 2021-03
+
+# We need to keep stuff like credentials separate from code so
+#   we'll stash that TSIG key somewhere that the team can leverage it.
+
+RESOLVER=bdds-int01.whoi.edu
+TSIG_KEY="/opt/local_credentials/$RESOLVER.key"
+DOMAINS="whoi.edu whoi.net"
+
+for domain in $DOMAINS; do
+  dig @$RESOLVER AXFR $domain -k $TSIG_KEY
+done

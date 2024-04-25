@@ -24,9 +24,9 @@ app.config["AUTHFILE"] = os.environ['AUTHFILE']
 with open(app.config["AUTHFILE"]) as f:
     app.config["AUTH"] = tuple(f.read().split())
 
-app.config['FLASK_DEBUG'] = int(os.environ['FLASK_DEBUG'])
-app.config['DATA_POLLING_INTERVAL_MINS'] = int(os.environ['DATA_POLLING_INTERVAL_MINS'])
-app.config['PAGE_REFRESH_INTERVAL_MINS'] = int(os.environ['PAGE_REFRESH_INTERVAL_MINS'])
+app.config['FLASK_DEBUG'] = 1
+app.config['DATA_POLLING_INTERVAL_MINS'] = 2
+app.config['PAGE_REFRESH_INTERVAL_MINS'] = 1
 app.config['DATA_POLLING_CERTS'] = os.environ['DATA_POLLING_CERTS'] if 'DATA_POLLING_CERTS' in os.environ else False
 app.config['CNAME_CSV'] = os.environ['CNAME_CSV'] if 'CNAME_CSV' in os.environ and os.path.isfile(os.environ['CNAME_CSV']) else False
 
@@ -44,7 +44,7 @@ def update():
         pprint(data, f)
 
 def collect_data(auth, output=None):
-    query_service = '?query=servicelist'
+    query_service = '?query=servicelist&hostname=manor.whoi.edu'
     url_service = QUERY_ROOT+query_service
     # fixed verify=False, see https://stackoverflow.com/a/12864892
     r_service = requests.get(url_service, auth=auth, verify=app.config['DATA_POLLING_CERTS'])

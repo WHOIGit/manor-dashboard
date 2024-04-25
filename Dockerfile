@@ -8,6 +8,8 @@ WORKDIR /flask
 COPY *.py ./
 COPY templates/* ./templates/
 COPY requirements.txt ./
+COPY auth.txt ./
+COPY servicelist.dict ./
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1

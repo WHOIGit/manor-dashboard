@@ -14,7 +14,7 @@ services:
     volumes:
       - ./:/flask
     environment:
-        - FLASK_DEBUG=1
+        #- FLASK_DEBUG=1
         - AUTHFILE=auth.txt
         - PAGE_REFRESH_INTERVAL_MINS=1
         - DATA_POLLING_INTERVAL_MINS=2
